@@ -3,6 +3,7 @@ package sample;
 public class GameLogic {
     int wrongGuesses;
 
+
     public GameLogic()
     {
         restart();
