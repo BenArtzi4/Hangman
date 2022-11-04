@@ -4,6 +4,6 @@ public class Body extends Organ
 {
     public Body()
     {
-        super(200,100,200,300);
+        super(250,100,250,200);
     }
 }

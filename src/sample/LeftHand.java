@@ -4,6 +4,6 @@ public class LeftHand extends Organ
 {
     public LeftHand()
     {
-        super(150,120,200,100);
+        super(190,140,250,120);
     }
 }

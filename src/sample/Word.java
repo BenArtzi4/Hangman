@@ -18,7 +18,7 @@ public class Word
                         'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z')); // 26 letters
         ArrayList<Character> usedLetters = new ArrayList<Character>();
         // word = bringWordFromText();  //TODO Delete from comment
-        numberOfLetters = word.length();
+        //numberOfLetters = word.length();
     }
 
 
