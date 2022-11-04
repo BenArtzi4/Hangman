@@ -8,6 +8,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 
+import javax.swing.*;
+
 
 public class Controller {
 
@@ -26,6 +28,8 @@ public class Controller {
 
     private Button[] AllLettersBtn;
 
+    private Button[] wordLettersBtn;
+
 
     public void initialize()
     {
@@ -36,6 +40,7 @@ public class Controller {
         }
 
         lettersButtons();
+        wordLettersBtn();
     }
 
     public void restart()
@@ -53,7 +58,6 @@ public class Controller {
         final int ROWS = 2;
         int column = 0;
         int row = 0;
-        final int letter = 97;
 
         AllLettersBtn = new Button[COLUMNS*ROWS];
 
@@ -64,7 +68,6 @@ public class Controller {
             AllLettersBtn[i] = new Button((char)(97+i) + "");
             AllLettersBtn[i].setPrefSize(allLetters.getPrefWidth()/COLUMNS, allLetters.getPrefHeight()/ROWS);
             allLetters.add(AllLettersBtn[i], column , row);
-            System.out.println(row + "  " + column);
             column ++;
             if (column == COLUMNS)
             {
@@ -74,8 +77,8 @@ public class Controller {
             final char curLetter = (char)(i+97);
             AllLettersBtn[i].setOnAction(new EventHandler<ActionEvent>() {
                 @Override
-                public void handle(ActionEvent actionEvent) {
-                    handleButtonAction(curLetter);
+                public void handle(ActionEvent event) {
+                    handleButtonAction(event,curLetter);
                 }
             });
 
@@ -85,20 +88,62 @@ public class Controller {
     private void handleButtonAction(ActionEvent event, char c)
     {
         Button temp = (Button)event.getSource();
-        if(game.getWord().isUse(c))
+        int guessCorrection = 0;
+
+        /*
+        If a letter appears in a word more than once then we will delete all its occurrences
+         */
+        int rightGuess = 0; // This variable make sure that if we right we don't enter the wrong letter place
+        while(guessCorrection != -1)
         {
-            game.usedLetterAlert();
+            guessCorrection = game.getWord().rightLetter(c);
+            if (guessCorrection != -1)
+            {
+                rightGuess = 1;
+                rightLetter(guessCorrection);
+                game.addOneToRightGuesses();
+                if (game.getRightGuess() == game.getWordLength())
+                {
+                    game.win();
+                }
+            }
+            else if (rightGuess == 0)
+            {
+                game.addOneToWrongGuesses();
+                wrongLetter();
+                if (game.getWrongGuesses() == 6)
+                {
+                    game.lose();
+                }
+            }
         }
-        else
+
+    }
+
+
+    public void wordLettersBtn()
+    {
+        int cells =  game.getWordLength();
+        wordLettersBtn = new Button[cells];
+
+        for (int i = 0 ; i < cells ; i++ )
         {
-            if (game.getWord().rightLetter(c))
-            {
-                game.rightLetter();
-            }
-            else
-            {
-                game.wrongLetter();
-            }
+            wordLettersBtn[i] = new Button("_");
+            wordLettersBtn[i].setPrefSize(allLetters.getPrefWidth() / cells, allLetters.getPrefHeight());
+            wordLetters.add(wordLettersBtn[i], i, 0);
         }
+    }
+
+    private void wrongLetter()
+    {
+        JOptionPane.showMessageDialog(null, "Wrong letter!\n", "Bad guess", JOptionPane.ERROR_MESSAGE);
+    }
+
+    private void rightLetter(int number)
+    {
+        wordLettersBtn[number].setText(game.getWord().getWordLetters().get(number) + "");
+        game.getWord().getWordLetters().set(number, '0');
+        game.getWord().getWordLettersIndexes().set(number, -1);
+
     }
 }
