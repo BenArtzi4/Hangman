@@ -1,5 +1,8 @@
 package sample;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -46,6 +49,12 @@ public class Word
     private void bringWordFromText()
     {
         // TODO change to method that return String from the file
+    }
+
+    private void getNewWord()
+    {
+        File file = new File("WordDate.txt");
+
     }
 
 
