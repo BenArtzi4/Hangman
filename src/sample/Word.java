@@ -15,7 +15,7 @@ public class Word
     public Word()
     {
 
-        word = "asdasd"; //TODO change word!!!!!!!!
+        word = "aabbccdd"; //TODO change word!!!!!!!!
         // word = bringWordFromText();  //TODO Delete from comment
         this.wordLetters = new ArrayList<Character>();
         this.wordLettersIndexes = new ArrayList<Integer>();

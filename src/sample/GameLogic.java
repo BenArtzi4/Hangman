@@ -12,6 +12,7 @@ public class GameLogic {
     private Word word;
     private ArrayList<Organ> organs;
     int wordLength;
+    boolean gameFinish;
 
 
 
@@ -26,6 +27,7 @@ public class GameLogic {
         Organ rLeg = new RightLeg();
         Organ lLeg = new LeftLeg();
         this.organs = new ArrayList<Organ>(Arrays.asList(head, body, rHand, lHand, rLeg, lLeg));
+        gameFinish = false;
     }
 
     public int getRightGuess() {
@@ -48,10 +50,18 @@ public class GameLogic {
         return organs;
     }
 
+    public boolean isGameFinish() {
+        return gameFinish;
+    }
+
+    public void setGameFinish(boolean gameFinish) {
+        this.gameFinish = gameFinish;
+    }
+
     public void restart()
     {
-        rightGuess = 0;
-        wrongGuesses = 0;
+        this.rightGuess = 0;
+        this.wrongGuesses = 0;
         this.word = new Word();
     }
 
@@ -66,32 +76,33 @@ public class GameLogic {
 
     public void lose()
     {
-        // JOptionPane.showMessageDialog(null, "You have reached the maximum number of wrong guesses", "You Lose", JOptionPane.ERROR_MESSAGE);
-        System.out.println("You lost");
+        JOptionPane.showMessageDialog(null, "You have reached the maximum number of wrong guesses", "You Lose", JOptionPane.ERROR_MESSAGE);
         askForOneMoreGame();
     }
 
 
     public void win()
     {
-        // JOptionPane.showMessageDialog(null, "congratulation\nYou Won!", "Good Game", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "congratulation\nYou Won!", "Good Game", JOptionPane.INFORMATION_MESSAGE);
         System.out.println("You Won");
         askForOneMoreGame();
     }
 
     public void askForOneMoreGame()
     {
-        //int answer = JOptionPane.showConfirmDialog(null,"Would you like to play again?", "Hangman", JOptionPane.YES_NO_OPTION);
-        System.out.println("would you liek to play again?");
-        System.exit(0);
-        /*
+        int answer = JOptionPane.showConfirmDialog(null,"Would you like to play again?", "Hangman", JOptionPane.YES_NO_OPTION);
         if (answer == 0)
         {
+
+            System.out.println("restarting!");
             restart();
+            gameFinish = true;
+
         }
-        System.exit(0);
-
-         */
-
+        else
+        {
+            System.exit(0);
+        }
     }
+
 }

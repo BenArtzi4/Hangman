@@ -25,6 +25,7 @@ abstract class Organ
         this.show = true;
         input.setStroke(Color.BLACK);
         input.strokeLine(this.x1, this.y1, this.x2, this.y2);
+        System.out.println("drawing!!!");
     }
 
     public void remove(GraphicsContext input)
