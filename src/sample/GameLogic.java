@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.scene.canvas.GraphicsContext;
+
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,6 +12,7 @@ public class GameLogic {
     private Word word;
     private ArrayList<Organ> organs;
     int wordLength;
+
 
 
     public GameLogic()
@@ -59,7 +62,6 @@ public class GameLogic {
     public void addOneToRightGuesses() {
         this.rightGuess++;
     }
-
 
     public void lose()
     {

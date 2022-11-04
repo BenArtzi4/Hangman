@@ -22,7 +22,7 @@ public class Controller {
     @FXML
     private Canvas cnv;
 
-    public GraphicsContext gc;
+    public static GraphicsContext gc;
 
     GameLogic game = new GameLogic();
 
@@ -34,11 +34,6 @@ public class Controller {
     public void initialize()
     {
         gc = cnv.getGraphicsContext2D();
-        for (int i = 0 ; i < game.getOrgans().size() ; i++ )
-        {
-            game.getOrgans().get(i).display(gc);
-        }
-
         lettersButtons();
         wordLettersBtn();
     }
@@ -109,8 +104,8 @@ public class Controller {
             }
             else if (rightGuess == 0)
             {
-                game.addOneToWrongGuesses();
                 wrongLetter();
+
                 if (game.getWrongGuesses() == 6)
                 {
                     game.lose();
@@ -136,8 +131,9 @@ public class Controller {
 
     private void wrongLetter()
     {
-        JOptionPane.showMessageDialog(null, "Wrong letter!\n", "Bad guess", JOptionPane.ERROR_MESSAGE);
-    }
+        game.getOrgans().get(game.getWrongGuesses()).display(gc);
+        game.addOneToWrongGuesses();
+     }
 
     private void rightLetter(int number)
     {
@@ -146,4 +142,5 @@ public class Controller {
         game.getWord().getWordLettersIndexes().set(number, -1);
 
     }
+
 }
