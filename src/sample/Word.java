@@ -57,9 +57,7 @@ public class Word
 
         while (counter != wordNUmber)
         {
-            System.out.println("counter: " + counter);
             newWOrd = buffReader.readLine();
-            System.out.println(newWOrd);
             counter++;
         }
         System.out.println(newWOrd);

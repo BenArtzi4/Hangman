@@ -78,7 +78,8 @@ public class GameLogic {
     }
 
     public void lose() throws IOException {
-        JOptionPane.showMessageDialog(null, "You have reached the maximum number of wrong guesses", "You Lose", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "You have reached the maximum number of wrong guesses\n" +
+                "The word was: " + word.getWord(), "You Lose", JOptionPane.ERROR_MESSAGE);
         askForOneMoreGame();
     }
 

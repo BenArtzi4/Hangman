@@ -84,7 +84,9 @@ public class Controller {
     private void handleButtonAction(ActionEvent event, char c) throws IOException {
         if (game.getWrongGuesses() > 5) {
             game.lose();
-        } else {
+        }
+        else
+        {
             int rightGuess = isLetterCorrect(event, c);
 
             if (rightGuess == 0)
@@ -114,6 +116,7 @@ public class Controller {
 
         int cells = game.getWordLength();
         wordLettersBtn = new Button[cells];
+
 
         for (int i = 0; i < cells; i++) {
             wordLettersBtn[i] = new Button("_");
