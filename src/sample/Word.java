@@ -48,16 +48,8 @@ public class Word
         // TODO change to method that return String from the file
     }
 
-    public int rightLetter(char c)
-    {
-        for (int i = 0 ; i < word.length() ; i++ )
-        {
-            if (wordLetters.get(i) == c && wordLettersIndexes.get(i) != -1 )
-            {
-                return i;
-            }
-        }
-        return -1;
-    }
+
+
+
 
 }

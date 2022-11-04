@@ -55,7 +55,8 @@ public class GameLogic {
         this.word = new Word();
     }
 
-    public void addOneToWrongGuesses() {
+    public void addOneToWrongGuesses()
+    {
         this.wrongGuesses++;
     }
 
@@ -65,26 +66,32 @@ public class GameLogic {
 
     public void lose()
     {
-        JOptionPane.showMessageDialog(null, "You have reached the maximum number of wrong guesses", "You Lose", JOptionPane.ERROR_MESSAGE);
+        // JOptionPane.showMessageDialog(null, "You have reached the maximum number of wrong guesses", "You Lose", JOptionPane.ERROR_MESSAGE);
+        System.out.println("You lost");
         askForOneMoreGame();
     }
 
 
     public void win()
     {
-        JOptionPane.showMessageDialog(null, "congratulation\nYou Won!", "Good Game", JOptionPane.INFORMATION_MESSAGE);
+        // JOptionPane.showMessageDialog(null, "congratulation\nYou Won!", "Good Game", JOptionPane.INFORMATION_MESSAGE);
+        System.out.println("You Won");
         askForOneMoreGame();
     }
 
     public void askForOneMoreGame()
     {
-        int answer = JOptionPane.showConfirmDialog(null,
-                "Would you like to play again?", "Hangman", JOptionPane.YES_NO_OPTION);
+        //int answer = JOptionPane.showConfirmDialog(null,"Would you like to play again?", "Hangman", JOptionPane.YES_NO_OPTION);
+        System.out.println("would you liek to play again?");
+        System.exit(0);
+        /*
         if (answer == 0)
         {
             restart();
         }
         System.exit(0);
+
+         */
 
     }
 }

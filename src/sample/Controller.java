@@ -36,6 +36,10 @@ public class Controller {
         gc = cnv.getGraphicsContext2D();
         lettersButtons();
         wordLettersBtn();
+        for (int i = 0 ; i < game.getOrgans().size() ; i++)
+        {
+            System.out.println(game.getOrgans().get(i) + "" + i);
+        }
     }
 
     public void restart()
@@ -82,12 +86,22 @@ public class Controller {
 
     private void handleButtonAction(ActionEvent event, char c)
     {
+        if (game.getWrongGuesses() > 5)
+        {
+            game.lose();
+        }
+        int rightGuess = isLetterCorrect(event, c);
+
+        if (rightGuess == 0)
+        {
+            wrongLetter();
+        }
+
+
+        /*
         Button temp = (Button)event.getSource();
         int guessCorrection = 0;
 
-        /*
-        If a letter appears in a word more than once then we will delete all its occurrences
-         */
         int rightGuess = 0; // This variable make sure that if we right we don't enter the wrong letter place
         while(guessCorrection != -1)
         {
@@ -112,9 +126,9 @@ public class Controller {
                 }
             }
         }
+        */
 
     }
-
 
     public void wordLettersBtn()
     {
@@ -132,14 +146,44 @@ public class Controller {
     private void wrongLetter()
     {
         game.getOrgans().get(game.getWrongGuesses()).display(gc);
+        addOrgan();
         game.addOneToWrongGuesses();
-     }
+        if (game.getWrongGuesses() == 7)
+        {
+            System.out.println("you lost");
+            System.exit(0);
+        }
 
-    private void rightLetter(int number)
+    }
+
+    public int isLetterCorrect(ActionEvent event, char c)
     {
-        wordLettersBtn[number].setText(game.getWord().getWordLetters().get(number) + "");
-        game.getWord().getWordLetters().set(number, '0');
-        game.getWord().getWordLettersIndexes().set(number, -1);
+        int counter = 0;
+        for (int i = 0 ; i < game.getWordLength() ; i++ )
+        {
+            if (game.getWord().getWordLetters().get(i)== c && game.getWord().getWordLettersIndexes().get(i) != -1 )
+            {
+                counter++;
+                rightLetter(i, c, event);
+            }
+        }
+        return counter;
+    }
+
+    private void rightLetter(int index, char c, ActionEvent event)
+    {
+        wordLettersBtn[index].setText(c+"");
+        ((Button)event.getSource()).setText("");
+        ((Button)event.getSource()).setDisable(true);
+        game.getWord().getWordLetters().set(index, '0');
+        game.getWord().getWordLettersIndexes().set(index, -1);
+    }
+
+    public void addOrgan()
+    {
+
+        game.getOrgans().get(game.getWrongGuesses()).display(gc);
+
 
     }
 
