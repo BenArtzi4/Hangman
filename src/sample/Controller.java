@@ -8,6 +8,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 
+import java.io.IOException;
+
 
 public class Controller {
 
@@ -28,17 +30,17 @@ public class Controller {
 
     private Button[] wordLettersBtn;
 
+    public Controller() throws IOException {
+    }
+
 
     public void initialize() {
         gc = cnv.getGraphicsContext2D();
         lettersButtons();
         CreateWordLettersBtn();
-        for (int i = 0; i < game.getOrgans().size(); i++) {
-            System.out.println(game.getOrgans().get(i) + "" + i);
-        }
     }
 
-    public void restart() {
+    public void restart() throws IOException {
         game.restart();
         for (int i = 0; i < game.getOrgans().size(); i++) {
             game.getOrgans().get(i).remove(gc);
@@ -68,49 +70,69 @@ public class Controller {
             AllLettersBtn[i].setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    handleButtonAction(event, curLetter);
+                    try {
+                        handleButtonAction(event, curLetter);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
 
         }
     }
 
-    private void handleButtonAction(ActionEvent event, char c) {
+    private void handleButtonAction(ActionEvent event, char c) throws IOException {
         if (game.getWrongGuesses() > 5) {
             game.lose();
         } else {
             int rightGuess = isLetterCorrect(event, c);
 
-            if (rightGuess == 0) {
+            if (rightGuess == 0)
+            {
                 wrongLetter(event);
             }
-            if (game.getRightGuess() == game.getWordLength()) {
+            if (game.getRightGuess() == game.getWordLength())
+            {
                 game.win();
             }
         }
 
         if (game.isGameFinish()) {
+            hideButtons();
             gc.clearRect(0, 0, cnv.getWidth(), cnv.getHeight());
-            CreateWordLettersBtn();
             game.setGameFinish(false);
             activateAllLettersButtons();
+            game.setWordLength(this.game.getWord().getWord().length());
+            CreateWordLettersBtn();
         }
 
     }
 
-    public void CreateWordLettersBtn() {
-        wordLetters.getChildren().removeAll();
+    public void CreateWordLettersBtn()
+    {
+
+
         int cells = game.getWordLength();
         wordLettersBtn = new Button[cells];
 
         for (int i = 0; i < cells; i++) {
             wordLettersBtn[i] = new Button("_");
+            wordLettersBtn[i].setVisible(true);
             wordLettersBtn[i].setPrefSize(allLetters.getPrefWidth() / cells, allLetters.getPrefHeight());
             wordLetters.add(wordLettersBtn[i], i, 0);
         }
     }
 
-    private void wrongLetter(ActionEvent event) {
+    public void hideButtons()
+    {
+        int cells = game.getWordLength();
+        for (int i = 0; i < cells; i++)
+        {
+            wordLettersBtn[i].setVisible(false);
+        }
+    }
+
+    private void wrongLetter(ActionEvent event) throws IOException {
         game.getOrgans().get(game.getWrongGuesses()).display(gc);
         game.addOneToWrongGuesses();
         ((Button) event.getSource()).setText("");

@@ -3,6 +3,7 @@ package sample;
 import javafx.scene.canvas.GraphicsContext;
 
 import javax.swing.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -16,8 +17,7 @@ public class GameLogic {
 
 
 
-    public GameLogic()
-    {
+    public GameLogic() throws IOException {
         restart();
         wordLength = this.word.getWord().length();
         Organ head = new Head();
@@ -36,6 +36,10 @@ public class GameLogic {
 
     public int getWordLength() {
         return wordLength;
+    }
+
+    public void setWordLength(int wordLength) {
+        this.wordLength = wordLength;
     }
 
     public int getWrongGuesses() {
@@ -58,8 +62,7 @@ public class GameLogic {
         this.gameFinish = gameFinish;
     }
 
-    public void restart()
-    {
+    public void restart() throws IOException {
         this.rightGuess = 0;
         this.wrongGuesses = 0;
         this.word = new Word();
@@ -74,27 +77,21 @@ public class GameLogic {
         this.rightGuess++;
     }
 
-    public void lose()
-    {
+    public void lose() throws IOException {
         JOptionPane.showMessageDialog(null, "You have reached the maximum number of wrong guesses", "You Lose", JOptionPane.ERROR_MESSAGE);
         askForOneMoreGame();
     }
 
 
-    public void win()
-    {
+    public void win() throws IOException {
         JOptionPane.showMessageDialog(null, "congratulation\nYou Won!", "Good Game", JOptionPane.INFORMATION_MESSAGE);
-        System.out.println("You Won");
         askForOneMoreGame();
     }
 
-    public void askForOneMoreGame()
-    {
+    public void askForOneMoreGame() throws IOException {
         int answer = JOptionPane.showConfirmDialog(null,"Would you like to play again?", "Hangman", JOptionPane.YES_NO_OPTION);
         if (answer == 0)
         {
-
-            System.out.println("restarting!");
             restart();
             gameFinish = true;
 

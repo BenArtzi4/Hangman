@@ -1,10 +1,11 @@
 package sample;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Random;
 
 public class Word
 {
@@ -15,11 +16,9 @@ public class Word
 
 
 
-    public Word()
-    {
+    public Word() throws IOException {
 
-        word = "aabbccdd"; //TODO change word!!!!!!!!
-        // word = bringWordFromText();  //TODO Delete from comment
+        word = getNewWord(); //TODO change word!!!!!!!!
         this.wordLetters = new ArrayList<Character>();
         this.wordLettersIndexes = new ArrayList<Integer>();
 
@@ -46,14 +45,27 @@ public class Word
     /*
         Method that return word from words file
          */
-    private void bringWordFromText()
-    {
-        // TODO change to method that return String from the file
-    }
 
-    private void getNewWord()
-    {
-        File file = new File("WordDate.txt");
+    private String getNewWord() throws IOException {
+        final int NUMBER_OF_LINES = 7;
+        Random rn = new Random();
+        int wordNUmber = rn.nextInt(7);
+        int counter = 0;
+        FileReader fileReader = new FileReader("WordData.txt");
+        BufferedReader buffReader = new BufferedReader(fileReader);
+        String newWOrd = buffReader.readLine();
+
+        while (counter != wordNUmber)
+        {
+            System.out.println("counter: " + counter);
+            newWOrd = buffReader.readLine();
+            System.out.println(newWOrd);
+            counter++;
+        }
+        System.out.println(newWOrd);
+        return newWOrd;
+
+
 
     }
 
