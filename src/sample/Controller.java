@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
@@ -21,6 +22,9 @@ public class Controller {
 
     @FXML
     private Canvas cnv;
+
+    @FXML
+    private TextField txtField;
 
     public static GraphicsContext gc;
 
@@ -38,6 +42,7 @@ public class Controller {
         gc = cnv.getGraphicsContext2D();
         lettersButtons();
         CreateWordLettersBtn();
+        txtField.setText("Letters used: ");
     }
 
     public void restart() throws IOException {
@@ -71,6 +76,7 @@ public class Controller {
                 @Override
                 public void handle(ActionEvent event) {
                     try {
+                        txtField.setText(txtField.getText() + ((Button) event.getSource()).getText() + " ");
                         handleButtonAction(event, curLetter);
                     } catch (IOException e) {
                         e.printStackTrace();
