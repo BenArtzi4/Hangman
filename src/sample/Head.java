@@ -10,19 +10,14 @@ public class Head extends Organ
         super(220,70, 60, 30);
     }
 
+    /*
+    An override method displaying the head
+     */
     @Override
     public void display(GraphicsContext input)
     {
         this.show = true;
         input.setStroke(Color.BLACK);
-        input.strokeRect(this.x1, this.y1, this.x2, this.y2);
-    }
-
-    @Override
-    public void remove(GraphicsContext input)
-    {
-        this.show = true;
-        input.setStroke(Color.WHITE);
         input.strokeRect(this.x1, this.y1, this.x2, this.y2);
     }
 }

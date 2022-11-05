@@ -181,8 +181,6 @@ public class Controller
         wordLettersBtn[index].setText(c + "");
         ((Button) event.getSource()).setText("");
         ((Button) event.getSource()).setDisable(true);
-        game.getWord().getWordLetters().set(index, '0');
-        game.getWord().getWordLettersIndexes().set(index, -1);
     }
 
     /*
@@ -206,11 +204,13 @@ public class Controller
 
     /*
     A method that returns all the letters pressed in the previous game
+    And resets the letters that were pressed in the last game
      */
     public void activateAllLettersButtons()
     {
         final int COLUMNS = 13;
         final int ROWS = 2;
+        txtField.setText("Letters used: ");
         for (int i = 0; i < COLUMNS * ROWS; i++)
         {
             AllLettersBtn[i].setText((char) (97 + i) + "");

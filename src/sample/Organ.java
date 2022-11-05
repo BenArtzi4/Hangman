@@ -3,6 +3,9 @@ package sample;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+/*
+An abstract class representing a organ of the hanging man
+ */
 abstract class Organ
 {
     int x1;
@@ -20,6 +23,9 @@ abstract class Organ
         show = false;
     }
 
+    /*
+    A method for adding the organ to the canvas
+     */
     public void display(GraphicsContext input)
     {
         this.show = true;
@@ -27,10 +33,4 @@ abstract class Organ
         input.strokeLine(this.x1, this.y1, this.x2, this.y2);
     }
 
-    public void remove(GraphicsContext input)
-    {
-        this.show = true;
-        input.setStroke(Color.WHITE);
-        input.strokeLine(this.x1, this.y1, this.x2, this.y2);
-    }
 }
