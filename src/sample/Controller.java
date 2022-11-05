@@ -12,7 +12,8 @@ import javafx.scene.layout.GridPane;
 import java.io.IOException;
 
 
-public class Controller {
+public class Controller
+{
 
     @FXML
     private GridPane allLetters;
@@ -34,25 +35,27 @@ public class Controller {
 
     private Button[] wordLettersBtn;
 
-    public Controller() throws IOException {
+    public Controller() throws IOException{
     }
 
 
-    public void initialize() {
+    /*
+    Start the game and the relevant boards and choose a word from the text box
+     */
+    public void initialize()
+    {
         gc = cnv.getGraphicsContext2D();
         lettersButtons();
         CreateWordLettersBtn();
         txtField.setText("Letters used: ");
     }
 
-    public void restart() throws IOException {
-        game.restart();
-        for (int i = 0; i < game.getOrgans().size(); i++) {
-            game.getOrgans().get(i).remove(gc);
-        }
-    }
 
-    public void lettersButtons() {
+    /*
+    Initializes all letters in the language for the game
+     */
+    public void lettersButtons()
+    {
         final int COLUMNS = 13;
         final int ROWS = 2;
         int column = 0;
@@ -61,7 +64,8 @@ public class Controller {
         AllLettersBtn = new Button[COLUMNS * ROWS];
 
 
-        for (int i = 0; i < COLUMNS * ROWS; i++) {
+        for (int i = 0; i < COLUMNS * ROWS; i++)
+        {
             // TODO: set buttons place(
             AllLettersBtn[i] = new Button((char) (97 + i) + "");
             AllLettersBtn[i].setPrefSize(allLetters.getPrefWidth() / COLUMNS, allLetters.getPrefHeight() / ROWS);
@@ -72,10 +76,13 @@ public class Controller {
                 row = 1;
             }
             final char curLetter = (char) (i + 97);
-            AllLettersBtn[i].setOnAction(new EventHandler<ActionEvent>() {
+            AllLettersBtn[i].setOnAction(new EventHandler<ActionEvent>()
+            {
                 @Override
-                public void handle(ActionEvent event) {
-                    try {
+                public void handle(ActionEvent event)
+                {
+                    try
+                    {
                         txtField.setText(txtField.getText() + ((Button) event.getSource()).getText() + " ");
                         handleButtonAction(event, curLetter);
                     } catch (IOException e) {
@@ -87,8 +94,13 @@ public class Controller {
         }
     }
 
-    private void handleButtonAction(ActionEvent event, char c) throws IOException {
-        if (game.getWrongGuesses() > 5) {
+    /*
+    A method that is invoked when a letter is clicked and checks if it exists in the selected word
+     */
+    private void handleButtonAction(ActionEvent event, char c) throws IOException
+    {
+        if (game.getWrongGuesses() > 5)
+        {
             game.lose();
         }
         else
@@ -116,22 +128,27 @@ public class Controller {
 
     }
 
+    /*
+    A method that initializes the squares according to the length of the selected word
+     */
     public void CreateWordLettersBtn()
     {
-
-
         int cells = game.getWordLength();
         wordLettersBtn = new Button[cells];
 
-
-        for (int i = 0; i < cells; i++) {
+        for (int i = 0; i < cells; i++)
+        {
             wordLettersBtn[i] = new Button("_");
             wordLettersBtn[i].setVisible(true);
+            wordLettersBtn[i].setDisable(true);
             wordLettersBtn[i].setPrefSize(allLetters.getPrefWidth() / cells, allLetters.getPrefHeight());
             wordLetters.add(wordLettersBtn[i], i, 0);
         }
     }
 
+    /*
+    A method for changing the letters in case of changing a word
+     */
     public void hideButtons()
     {
         int cells = game.getWordLength();
@@ -141,6 +158,9 @@ public class Controller {
         }
     }
 
+    /*
+    A method that updates the relevant panels and draws the member if the user has chosen a letter that is not in the word
+     */
     private void wrongLetter(ActionEvent event) throws IOException {
         game.getOrgans().get(game.getWrongGuesses()).display(gc);
         game.addOneToWrongGuesses();
@@ -153,10 +173,28 @@ public class Controller {
 
     }
 
-    public int isLetterCorrect(ActionEvent event, char c) {
+    /*
+    A method that updates the relevant boards if the user has selected a letter in the word
+     */
+    private void rightLetter(int index, char c, ActionEvent event)
+    {
+        wordLettersBtn[index].setText(c + "");
+        ((Button) event.getSource()).setText("");
+        ((Button) event.getSource()).setDisable(true);
+        game.getWord().getWordLetters().set(index, '0');
+        game.getWord().getWordLettersIndexes().set(index, -1);
+    }
+
+    /*
+    A method that checks whether the selected letter is in the word
+     */
+    public int isLetterCorrect(ActionEvent event, char c)
+    {
         int counter = 0;
-        for (int i = 0; i < game.getWordLength(); i++) {
-            if (game.getWord().getWordLetters().get(i) == c && game.getWord().getWordLettersIndexes().get(i) != -1) {
+        for (int i = 0; i < game.getWordLength(); i++)
+        {
+            if (game.getWord().getWordLetters().get(i) == c)
+            {
                 counter++;
                 rightLetter(i, c, event);
                 game.addOneToRightGuesses();
@@ -165,29 +203,18 @@ public class Controller {
         return counter;
     }
 
-    private void rightLetter(int index, char c, ActionEvent event) {
-        wordLettersBtn[index].setText(c + "");
-        ((Button) event.getSource()).setText("");
-        ((Button) event.getSource()).setDisable(true);
-        game.getWord().getWordLetters().set(index, '0');
-        game.getWord().getWordLettersIndexes().set(index, -1);
-    }
 
+    /*
+    A method that returns all the letters pressed in the previous game
+     */
     public void activateAllLettersButtons()
     {
         final int COLUMNS = 13;
         final int ROWS = 2;
-        int column = 0;
-        int row = 0;
-        for (int i = 0; i < COLUMNS * ROWS; i++) {
+        for (int i = 0; i < COLUMNS * ROWS; i++)
+        {
             AllLettersBtn[i].setText((char) (97 + i) + "");
             AllLettersBtn[i].setDisable(false);
-            column++;
-            if (column == COLUMNS) {
-                column = 0;
-                row = 1;
-            }
         }
-
     }
 }
