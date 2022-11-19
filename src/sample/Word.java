@@ -60,7 +60,6 @@ public class Word
             newWOrd = buffReader.readLine();
             counter++;
         }
-        System.out.println(newWOrd);
         return newWOrd;
     }
 }
