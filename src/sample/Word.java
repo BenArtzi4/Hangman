@@ -51,15 +51,22 @@ public class Word
         Random rn = new Random();
         int wordNUmber = rn.nextInt(7);
         int counter = 0;
-        FileReader fileReader = new FileReader("WordData.txt");
-        BufferedReader buffReader = new BufferedReader(fileReader);
-        String newWOrd = buffReader.readLine();
+        try {
+            FileReader fileReader = new FileReader("WordData.txt");
+            BufferedReader buffReader = new BufferedReader(fileReader);
+            String newWOrd = buffReader.readLine();
 
-        while (counter != wordNUmber)
+            while (counter != wordNUmber)
+            {
+                newWOrd = buffReader.readLine();
+                counter++;
+            }
+            return newWOrd;
+
+        }catch (IOException e)
         {
-            newWOrd = buffReader.readLine();
-            counter++;
+            System.out.println("File not found");
         }
-        return newWOrd;
+        return null;
     }
 }
